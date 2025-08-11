@@ -150,7 +150,7 @@
             transition: width 0.3s ease;
             position: relative;
             box-shadow: 0 1px 2px rgba(40, 167, 69, 0.3);
-            animation: progressDemo 3s ease-in-out infinite;
+
         }
         
         @keyframes progressDemo {
@@ -283,9 +283,9 @@
                         <div class="loading-text">Loading Experience</div>
                         <div class="loading-subtext">Preparing your AR adventure...</div>
                         <div class="progress-container">
-                            <div class="progress-bar"></div>
+                            <div id="demo-progress-bar" class="progress-bar"></div>
                         </div>
-                        <div class="progress-text">Loading...</div>
+                        <div id="demo-progress-text" class="progress-text">0%</div>
                     </div>
                 </div>
             </div>
@@ -319,5 +319,28 @@
             This preview shows the new loading screen design. The actual WebAR experience will use these styles when built by Unity.
         </p>
     </div>
+    
+    <script>
+        // Demo progress bar animation
+        let progress = 0;
+        const demoProgressBar = document.getElementById('demo-progress-bar');
+        const demoProgressText = document.getElementById('demo-progress-text');
+        
+        function updateProgress() {
+            progress += Math.random() * 5; // Random increment
+            if (progress > 100) progress = 0; // Reset when complete
+            
+            const progressPercent = Math.floor(progress);
+            if (demoProgressBar) {
+                demoProgressBar.style.width = progressPercent + '%';
+            }
+            if (demoProgressText) {
+                demoProgressText.textContent = progressPercent + '%';
+            }
+        }
+        
+        // Update progress every 200ms
+        setInterval(updateProgress, 200);
+    </script>
 </body>
 </html>

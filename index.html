@@ -309,7 +309,6 @@
             var container = document.querySelector("#unity-container");
             var canvas = document.querySelector("#unity-canvas");
             var loadingBar = document.querySelector("#unity-loading-bar");
-            var progressBarFull = document.querySelector("#unity-progress-bar-full");
             async function StartAR() {
                 // First request camera permission
                 try {
@@ -346,8 +345,21 @@
                     // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
                     },
                     (progress) => {
-                        progressBarFull.style.width = 100 * progress + "%";
-                        document.getElementById("progress-text").textContent = Math.round(100 * progress) + "%";
+                        const progressPercent = Math.round(100 * progress);
+                        console.log("Loading progress:", progressPercent + "%");
+                        
+                        const progressBarFull = document.querySelector("#unity-progress-bar-full");
+                        if (progressBarFull) {
+                            progressBarFull.style.width = progressPercent + "%";
+                            console.log("Progress bar updated to:", progressPercent + "%");
+                        } else {
+                            console.error("Progress bar element not found");
+                        }
+                        
+                        const progressText = document.getElementById("progress-text");
+                        if (progressText) {
+                            progressText.textContent = progressPercent + "%";
+                        }
                     }
                 ).then((unityInstance) => {
                     window.unityInstance = unityInstance;
